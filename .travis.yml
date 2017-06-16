@@ -12,6 +12,7 @@ python:
   - "pypy"
   - "pypy3"
 install:
+  - pip install -r tests/requirements.txt
   - pip install -e .
 script:
   - python setup.py test
