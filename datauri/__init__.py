@@ -1,7 +1,6 @@
 import mimetypes
 import re
 import textwrap
-import urllib
 
 try:
     from base64 import decodebytes as decode64
