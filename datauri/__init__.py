@@ -5,15 +5,17 @@ import urllib
 
 try:
     from base64 import decodebytes as decode64
+    from base64 import encodebytes as encode64
     BYTES = True
 except ImportError:
     from base64 import decodestring as decode64
+    from base64 import encodestring as encode64
     BYTES = False
 
 try:
-    from urllib.parse import unquote
+    from urllib.parse import quote, unquote
 except ImportError:
-    from urllib import unquote
+    from urllib import quote, unquote
 
 
 MIMETYPE_REGEX = r'[\w]+\/[\w\-\+\.]+'
@@ -47,9 +49,17 @@ class DataURI(str):
             parts.extend([';charset=', charset])
         if base64:
             parts.append(';base64')
-            encoded_data = data.encode('base64').replace('\n', '')
+            if BYTES:
+                _charset = charset or 'utf-8'
+                if isinstance(data, bytes):
+                    _data = data
+                else:
+                    _data = bytes(data, _charset)
+                encoded_data = encode64(_data).decode(_charset).strip()
+            else:
+                encoded_data = encode64(data).strip()
         else:
-            encoded_data = urllib.quote(data)
+            encoded_data = quote(data)
         parts.extend([',', encoded_data])
         return cls(''.join(parts))
 
