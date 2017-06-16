@@ -37,7 +37,7 @@ Use DataURI.text to get the text type (`str` on Python 3.x, `unicode` on Python 
 >>> made
 DataURI('data:text/plain;charset=us-ascii;base64,VGhpcyBpcyBhIG1lc3NhZ2Uu')
 >>> made.data
-'This is a message.'
+b'This is a message.'
 ```
 
 
@@ -51,7 +51,7 @@ This is really just a convenience method.
 >>> png_uri.mimetype
 'image/png'
 >>> png_uri.data
-'\x89PNG\r\n...'
+b'\x89PNG\r\n...'
 ```
 
 ### License
