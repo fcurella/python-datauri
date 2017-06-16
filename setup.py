@@ -37,5 +37,5 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     test_suite='tests',
-    test_requires=['six'],
+    tests_require=['six'],
 )
