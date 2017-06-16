@@ -19,7 +19,7 @@ setup(
     url='https://github.com/fcurella/python-datauri/',
     maintainer='Flavio Curella',
     maintainer_email='flavio.curella@gmail.com',
-    description="A li’l class for data URI manipulation in Python",
+    description="A li'l class for data URI manipulation in Python",
     long_description=read('README.md'),
     license='MIT',
     packages=find_packages(exclude=['*.tests']),
@@ -37,4 +37,5 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     test_suite='tests',
+    test_requires=['six'],
 )

@@ -26,7 +26,7 @@ True
 'The quick brown fox jumped over the lazy dog.'
 ```
 
-Note that `DataURI.data` won't decode the data bytestring into a unicode string based on the charset.
+`DataURI.data` will decode the data bytestring into unicode or bytes according to the charset, if present.
 
 
 ### Creating from a string
@@ -37,7 +37,7 @@ Note that `DataURI.data` won't decode the data bytestring into a unicode string 
 >>> made
 DataURI('data:text/plain;charset=us-ascii;base64,VGhpcyBpcyBhIG1lc3NhZ2Uu')
 >>> made.data
-'This is a message.'
+u'This is a message.'
 ```
 
 
@@ -51,7 +51,7 @@ This is really just a convenience method.
 >>> png_uri.mimetype
 'image/png'
 >>> png_uri.data
-'\x89PNG\r\n...'
+b'\x89PNG\r\n...'
 ```
 
 ### License

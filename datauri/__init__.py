@@ -3,6 +3,18 @@ import re
 import textwrap
 import urllib
 
+try:
+    from base64 import decodebytes as decode64
+    BYTES = True
+except ImportError:
+    from base64 import decodestring as decode64
+    BYTES = False
+
+try:
+    from urllib.parse import unquote
+except ImportError:
+    from urllib import unquote
+
 
 MIMETYPE_REGEX = r'[\w]+\/[\w\-\+\.]+'
 _MIMETYPE_RE = re.compile('^{}$'.format(MIMETYPE_REGEX))
@@ -13,6 +25,7 @@ _CHARSET_RE = re.compile('^{}$'.format(CHARSET_REGEX))
 DATA_URI_REGEX = (
     r'data:' +
     r'(?P<mimetype>{})?'.format(MIMETYPE_REGEX) +
+    r'(?:\;name\=(?P<name>[\w\.\-]+))?' +
     r'(?:\;charset\=(?P<charset>{}))?'.format(CHARSET_REGEX) +
     r'(?P<base64>\;base64)?' +
     r',(?P<data>.*)')
@@ -63,16 +76,20 @@ class DataURI(str):
         return self._parse[0]
 
     @property
-    def charset(self):
+    def name(self):
         return self._parse[1]
 
     @property
-    def is_base64(self):
+    def charset(self):
         return self._parse[2]
 
     @property
-    def data(self):
+    def is_base64(self):
         return self._parse[3]
+
+    @property
+    def data(self):
+        return self._parse[4]
 
     @property
     def _parse(self):
@@ -80,9 +97,24 @@ class DataURI(str):
         if not match:
             raise ValueError("Not a valid data URI: %r" % self)
         mimetype = match.group('mimetype') or None
+        name = match.group('name') or None
         charset = match.group('charset') or None
+
         if match.group('base64'):
-            data = match.group('data').decode('base64')
+            if BYTES:
+                _charset = charset or 'utf-8'
+                if isinstance(match.group('data'), bytes):
+                    _data = match.group('data')
+                else:
+                    _data = bytes(match.group('data'), _charset)
+
+                data = decode64(_data)
+            else:
+                data = decode64(match.group('data'))
         else:
-            data = urllib.unquote(match.group('data'))
-        return mimetype, charset, bool(match.group('base64')), data
+            data = unquote(match.group('data'))
+
+        if charset is not None:
+            data = data.decode(charset)
+
+        return mimetype, name, charset, bool(match.group('base64')), data
