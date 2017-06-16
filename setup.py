@@ -20,7 +20,7 @@ setup(
     maintainer='Flavio Curella',
     maintainer_email='flavio.curella@gmail.com',
     description="A li'l class for data URI manipulation in Python",
-    long_description=read('README.md'),
+    long_description=read('README.rst'),
     license='MIT',
     packages=find_packages(exclude=['*.tests']),
     platforms=["any"],
