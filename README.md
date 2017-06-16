@@ -23,11 +23,11 @@ $ pip install python-datauri
 >>> uri.is_base64
 True
 >>> uri.data
-'The quick brown fox jumped over the lazy dog.'
+b'The quick brown fox jumped over the lazy dog.'
 ```
 
-`DataURI.data` will decode the data bytestring into unicode or bytes according to the charset, if present.
-
+Note that `DataURI.data` will always return bytes (a string on Python 2).
+Use DataURI.text to get the text type (`str` on Python 3.x, `unicode` on Python 2.x).
 
 ### Creating from a string
 
@@ -37,7 +37,7 @@ True
 >>> made
 DataURI('data:text/plain;charset=us-ascii;base64,VGhpcyBpcyBhIG1lc3NhZ2Uu')
 >>> made.data
-u'This is a message.'
+'This is a message.'
 ```
 
 
@@ -51,7 +51,7 @@ This is really just a convenience method.
 >>> png_uri.mimetype
 'image/png'
 >>> png_uri.data
-b'\x89PNG\r\n...'
+'\x89PNG\r\n...'
 ```
 
 ### License

@@ -92,6 +92,13 @@ class DataURI(str):
         return self._parse[4]
 
     @property
+    def text(self):
+        if self.charset is None:
+            raise ValueError("DataURI has no encoding set.")
+
+        return self.data.decode(self.charset)
+
+    @property
     def _parse(self):
         match = _DATA_URI_RE.match(self)
         if not match:
@@ -113,8 +120,5 @@ class DataURI(str):
                 data = decode64(match.group('data'))
         else:
             data = unquote(match.group('data'))
-
-        if charset is not None:
-            data = data.decode(charset)
 
         return mimetype, name, charset, bool(match.group('base64')), data
