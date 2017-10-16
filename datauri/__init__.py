@@ -86,7 +86,10 @@ class DataURI(str):
 
     @property
     def name(self):
-        return unquote(self._parse[1])
+        name = self._parse[1]
+        if name is not None:
+            return unquote(name)
+        return name
 
     @property
     def charset(self):
