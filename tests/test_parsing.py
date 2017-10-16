@@ -37,3 +37,11 @@ class ParseTestCase(unittest.TestCase):
         self.assertTrue(isinstance(parsed.data, six.binary_type))
         with self.assertRaises(ValueError):
             self.assertTrue(isinstance(parsed.text, six.text_type))
+
+    def test_make(self):
+        made = DataURI.make('text/plain', charset='us-ascii', base64=True, data='This is a message.')
+        self.assertEqual(made.text, u'This is a message.')
+
+    def test_make_no_charset(self):
+        made = DataURI.make('text/plain', charset=None, base64=True, data='This is a message.')
+        self.assertEqual(made.data, b'This is a message.')
