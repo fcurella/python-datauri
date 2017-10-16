@@ -15,6 +15,11 @@ class ParseTestCase(unittest.TestCase):
         parsed = DataURI(t)
         self.assertEqual(parsed.name, 'file-1_final.txt')
 
+    def test_urlencoded(self):
+        t = 'data:text/plain;name=file%201.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
+        parsed = DataURI(t)
+        self.assertEqual(parsed.name, 'file 1.txt')
+
     def test_parse_name_no_charset(self):
         t = 'data:text/plain;name=file.txt;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
         parsed = DataURI(t)

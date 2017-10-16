@@ -25,7 +25,7 @@ _CHARSET_RE = re.compile('^{}$'.format(CHARSET_REGEX))
 DATA_URI_REGEX = (
     r'data:' +
     r'(?P<mimetype>{})?'.format(MIMETYPE_REGEX) +
-    r'(?:\;name\=(?P<name>[\w\.\-]+))?' +
+    r'(?:\;name\=(?P<name>[\w\.\-%]+))?' +
     r'(?:\;charset\=(?P<charset>{}))?'.format(CHARSET_REGEX) +
     r'(?P<base64>\;base64)?' +
     r',(?P<data>.*)')
@@ -77,7 +77,7 @@ class DataURI(str):
 
     @property
     def name(self):
-        return self._parse[1]
+        return unquote(self._parse[1])
 
     @property
     def charset(self):
