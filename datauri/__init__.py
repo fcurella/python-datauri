@@ -26,7 +26,7 @@ _CHARSET_RE = re.compile('^{}$'.format(CHARSET_REGEX))
 DATA_URI_REGEX = (
     r'data:' +
     r'(?P<mimetype>{})?'.format(MIMETYPE_REGEX) +
-    r'(?:\;name\=(?P<name>[\w\.\-%]+))?' +
+    r"(?:\;name\=(?P<name>[\w\.\-%!*'~\(\)]+))?" +
     r'(?:\;charset\=(?P<charset>{}))?'.format(CHARSET_REGEX) +
     r'(?P<base64>\;base64)?' +
     r',(?P<data>.*)')
