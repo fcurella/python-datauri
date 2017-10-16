@@ -68,4 +68,4 @@ Credits
 -------
 
 This is a repackaging of `this Gist <https://gist.github.com/zacharyvoase/5538178>`_
-originally written by Zachary Voase.
+originally written by `Zachary Voase <https://github.com/zacharyvoase>`_.
