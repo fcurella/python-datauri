@@ -69,7 +69,7 @@ This is really just a convenience method.
 License
 -------
 
-This code is released under the Unlicense (c.f. <http://unlicense.org/>).
+This code is released under the `Unlicense <http://unlicense.org/>`_.
 
 Credits
 -------
