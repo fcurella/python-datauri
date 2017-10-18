@@ -38,7 +38,7 @@ Parsing
   b'The quick brown fox jumped over the lazy dog.'
 
 Note that ``DataURI.data`` will always return bytes (a string on Python 2).
-Use DataURI.text to get the text type (``str`` on Python 3.x, ``unicode`` on Python 2.x).
+Use ``DataURI.text`` to get the text type (``str`` on Python 3.x, ``unicode`` on Python 2.x).
 
 Creating from a string
 ----------------------
