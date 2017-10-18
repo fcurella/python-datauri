@@ -1,6 +1,13 @@
 DataURI
 =======
 
+.. image:: https://travis-ci.org/fcurella/python-datauri.svg?branch=master
+    :target: https://travis-ci.org/fcurella/python-datauri
+
+
+.. image:: https://coveralls.io/repos/fcurella/python-datauri/badge.svg?branch=master&service=github
+  :target: https://coveralls.io/github/fcurella/python-datauri?branch=master
+
 Data URI manipulation made easy.
 
 This isn't very robust, and will reject a number of valid data URIs. However, it meets the most useful case: a mimetype, a charset, and the base64 flag.
