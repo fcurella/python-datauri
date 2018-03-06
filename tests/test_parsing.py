@@ -14,7 +14,7 @@ class ParseTestCase(unittest.TestCase):
         t = 'data:text/plain;charset=utf-8,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
         DataURI(t)
 
-    def test_parse_base65(self):
+    def test_parse_base64(self):
         t = 'data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
         DataURI(t)
 
@@ -23,7 +23,7 @@ class ParseTestCase(unittest.TestCase):
         with self.assertRaises(ValueError):
             DataURI(t)
 
-    def test_parse_invalid_charser(self):
+    def test_parse_invalid_charset(self):
         t = 'data:text/plain;charset=*garbled*;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
         with self.assertRaises(ValueError):
             DataURI(t)
@@ -33,6 +33,19 @@ class ParseTestCase(unittest.TestCase):
         parsed = DataURI.from_file(filename)
         self.assertEqual(parsed.data, b'This is a message.\n')
         self.assertEqual(parsed.charset, None)
+
+    def test_from_file_charset(self):
+        filename = os.path.join(TEST_DIR, 'test_file.txt')
+        parsed = DataURI.from_file(filename, charset='us-ascii')
+        self.assertEqual(parsed.data, b'This is a message.\n')
+        self.assertEqual(parsed.text, 'This is a message.\n')
+        self.assertEqual(parsed.charset, 'us-ascii')
+
+        filename = os.path.join(TEST_DIR, 'test_file_ebcdic.txt')
+        parsed = DataURI.from_file(filename, charset='cp500')
+        self.assertEqual(parsed.data, b'\xe3\x88\x89\xa2@\x89\xa2@\x81@\x94\x85\xa2\xa2\x81\x87\x85K%')
+        self.assertEqual(parsed.text, 'This is a message.\n')
+        self.assertEqual(parsed.charset, 'cp500')
 
     def test_parse_name(self):
         t = 'data:text/plain;name=file-1_final.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
