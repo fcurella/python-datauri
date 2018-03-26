@@ -1,0 +1,5 @@
+[run]
+include = genericclient_aiohttp/*
+
+[report]
+show_missing = True
