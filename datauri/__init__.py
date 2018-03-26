@@ -126,11 +126,7 @@ class DataURI(str):
         if match.group('base64'):
             if BYTES:
                 _charset = charset or 'utf-8'
-                if isinstance(match.group('data'), bytes):
-                    _data = match.group('data')
-                else:
-                    _data = bytes(match.group('data'), _charset)
-
+                _data = bytes(match.group('data'), _charset)
                 data = decode64(_data)
             else:
                 data = decode64(match.group('data'))
