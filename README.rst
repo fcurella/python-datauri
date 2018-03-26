@@ -5,8 +5,8 @@ DataURI
     :target: https://travis-ci.org/fcurella/python-datauri
 
 
-.. image:: https://coveralls.io/repos/fcurella/python-datauri/badge.svg?branch=master&service=github
-  :target: https://coveralls.io/github/fcurella/python-datauri?branch=master
+.. image:: https://coveralls.io/repos/github/fcurella/python-datauri/badge.svg?branch=master
+    :target: https://coveralls.io/github/fcurella/python-datauri?branch=master
 
 Data URI manipulation made easy.
 
