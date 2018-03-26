@@ -17,6 +17,9 @@ except ImportError:
     from urllib import quote, unquote
 
 
+from .exceptions import InvalidCharset, InvalidDataURI, InvalidMimeType
+
+
 MIMETYPE_REGEX = r'[\w]+\/[\w\-\+\.]+'
 _MIMETYPE_RE = re.compile('^{}$'.format(MIMETYPE_REGEX))
 
@@ -40,11 +43,11 @@ class DataURI(str):
         parts = ['data:']
         if mimetype is not None:
             if not _MIMETYPE_RE.match(mimetype):
-                raise ValueError("Invalid mimetype: %r" % mimetype)
+                raise InvalidMimeType("Invalid mimetype: %r" % mimetype)
             parts.append(mimetype)
         if charset is not None:
             if not _CHARSET_RE.match(charset):
-                raise ValueError("Invalid charset: %r" % charset)
+                raise InvalidCharset("Invalid charset: %r" % charset)
             parts.extend([';charset=', charset])
         if base64:
             parts.append(';base64')
@@ -107,7 +110,7 @@ class DataURI(str):
     @property
     def text(self):
         if self.charset is None:
-            raise ValueError("DataURI has no encoding set.")
+            raise InvalidCharset("DataURI has no encoding set.")
 
         return self.data.decode(self.charset)
 
@@ -115,7 +118,7 @@ class DataURI(str):
     def _parse(self):
         match = _DATA_URI_RE.match(self)
         if not match:
-            raise ValueError("Not a valid data URI: %r" % self)
+            raise InvalidDataURI("Not a valid data URI: %r" % self)
         mimetype = match.group('mimetype') or None
         name = match.group('name') or None
         charset = match.group('charset') or None

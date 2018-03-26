@@ -2,7 +2,7 @@ import os
 import unittest
 
 import six
-from datauri import DataURI
+from datauri import DataURI, exceptions
 
 
 TEST_DIR = os.path.dirname(__file__)
@@ -18,15 +18,22 @@ class ParseTestCase(unittest.TestCase):
         t = 'data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
         DataURI(t)
 
-    def test_parse_invalid_mimetype(self):
+    def test_parse_invalid_datauri(self):
         t = 'data:*garbled*;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
-        with self.assertRaises(ValueError):
+        with self.assertRaises(exceptions.InvalidDataURI):
             DataURI(t)
 
-    def test_parse_invalid_charset(self):
         t = 'data:text/plain;charset=*garbled*;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
-        with self.assertRaises(ValueError):
+        with self.assertRaises(exceptions.InvalidDataURI):
             DataURI(t)
+
+    def test_parse_invalid_mimetype(self):
+        with self.assertRaises(exceptions.InvalidMimeType):
+            DataURI.make(mimetype='*garbled*', charset='utf-8', base64=True, data='VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu')
+
+    def test_parse_invalid_charset(self):
+        with self.assertRaises(exceptions.InvalidCharset):
+            DataURI.make(mimetype='text/plain', charset='*garbled*', base64=True, data='VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu')
 
     def test_from_file(self):
         filename = os.path.join(TEST_DIR, 'test_file.txt')
@@ -93,7 +100,7 @@ lciB0aGUgbGF6eSBkb2cu""")
         t = 'data:text/plain;name=file.txt;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
         parsed = DataURI(t)
         self.assertTrue(isinstance(parsed.data, six.binary_type))
-        with self.assertRaises(ValueError):
+        with self.assertRaises(exceptions.InvalidCharset):
             self.assertTrue(isinstance(parsed.text, six.text_type))
 
     def test_make(self):
