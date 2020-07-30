@@ -2,19 +2,15 @@ import mimetypes
 import re
 import textwrap
 
-try:
-    from base64 import decodebytes as decode64
-    from base64 import encodebytes as encode64
-    BYTES = True
-except ImportError:
-    from base64 import decodestring as decode64
-    from base64 import encodestring as encode64
-    BYTES = False
+from base64 import b64decode as decode64
+from base64 import b64encode as encode64
 
 try:
     from urllib.parse import quote, unquote
+    BYTES = True
 except ImportError:
     from urllib import quote, unquote
+    BYTES = False
 
 
 from .exceptions import InvalidCharset, InvalidDataURI, InvalidMimeType

@@ -54,6 +54,11 @@ class ParseTestCase(unittest.TestCase):
         self.assertEqual(parsed.text, 'This is a message.\n')
         self.assertEqual(parsed.charset, 'cp500')
 
+    def test_no_wrap(self):
+        filename = os.path.join(TEST_DIR, 'test_long_file.txt')
+        parsed = DataURI.from_file(filename)
+        self.assertFalse("\n" in str(parsed))
+
     def test_parse_name(self):
         t = 'data:text/plain;name=file-1_final.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
         parsed = DataURI(t)
