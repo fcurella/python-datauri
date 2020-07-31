@@ -1,9 +1,7 @@
 import os
 import unittest
 
-import six
 from datauri import DataURI, exceptions
-
 
 TEST_DIR = os.path.dirname(__file__)
 
@@ -92,8 +90,8 @@ class ParseTestCase(unittest.TestCase):
     def test_text(self):
         t = 'data:text/plain;name=file-1_final.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
         parsed = DataURI(t)
-        self.assertTrue(isinstance(parsed.data, six.binary_type))
-        self.assertTrue(isinstance(parsed.text, six.text_type))
+        self.assertTrue(isinstance(parsed.data, bytes))
+        self.assertTrue(isinstance(parsed.text, str))
 
     def test_wrap(self):
         t = 'data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
@@ -104,9 +102,9 @@ lciB0aGUgbGF6eSBkb2cu""")
     def test_text_no_charset(self):
         t = 'data:text/plain;name=file.txt;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu'
         parsed = DataURI(t)
-        self.assertTrue(isinstance(parsed.data, six.binary_type))
+        self.assertTrue(isinstance(parsed.data, bytes))
         with self.assertRaises(exceptions.InvalidCharset):
-            self.assertTrue(isinstance(parsed.text, six.text_type))
+            self.assertTrue(isinstance(parsed.text, str))
 
     def test_make(self):
         made = DataURI.make('text/plain', charset='us-ascii', base64=False, data='This is a message.')

@@ -5,16 +5,9 @@ import textwrap
 from base64 import b64decode as decode64
 from base64 import b64encode as encode64
 
-try:
-    from urllib.parse import quote, unquote
-    BYTES = True
-except ImportError:
-    from urllib import quote, unquote
-    BYTES = False
-
+from urllib.parse import quote, unquote
 
 from .exceptions import InvalidCharset, InvalidDataURI, InvalidMimeType
-
 
 MIMETYPE_REGEX = r'[\w]+\/[\w\-\+\.]+'
 _MIMETYPE_RE = re.compile('^{}$'.format(MIMETYPE_REGEX))
@@ -47,15 +40,12 @@ class DataURI(str):
             parts.extend([';charset=', charset])
         if base64:
             parts.append(';base64')
-            if BYTES:
-                _charset = charset or 'utf-8'
-                if isinstance(data, bytes):
-                    _data = data
-                else:
-                    _data = bytes(data, _charset)
-                encoded_data = encode64(_data).decode(_charset).strip()
+            _charset = charset or 'utf-8'
+            if isinstance(data, bytes):
+                _data = data
             else:
-                encoded_data = encode64(data).strip()
+                _data = bytes(data, _charset)
+            encoded_data = encode64(_data).decode(_charset).strip()
         else:
             encoded_data = quote(data)
         parts.extend([',', encoded_data])
@@ -120,12 +110,9 @@ class DataURI(str):
         charset = match.group('charset') or None
 
         if match.group('base64'):
-            if BYTES:
-                _charset = charset or 'utf-8'
-                _data = bytes(match.group('data'), _charset)
-                data = decode64(_data)
-            else:
-                data = decode64(match.group('data'))
+            _charset = charset or 'utf-8'
+            _data = bytes(match.group('data'), _charset)
+            data = decode64(_data)
         else:
             data = unquote(match.group('data'))
 
