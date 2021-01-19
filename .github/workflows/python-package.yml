@@ -37,7 +37,7 @@ jobs:
       env:
         COVERALLS_PARALLEL: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        FLAG_NAME: run-${{ matrix.python-version }}
+        COVERALLS_FLAG_NAME: run-${{ matrix.python-version }}
 
   finish:
     needs: [test]
