@@ -3,7 +3,6 @@ import unittest
 
 from datauri import DataURI, exceptions
 
-
 TEST_DIR = os.path.dirname(__file__)
 
 
