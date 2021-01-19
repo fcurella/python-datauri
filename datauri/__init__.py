@@ -9,27 +9,27 @@ from urllib.parse import quote, unquote
 
 from .exceptions import InvalidCharset, InvalidDataURI, InvalidMimeType
 
-MIMETYPE_REGEX = r'[\w]+\/[\w\-\+\.]+'
-_MIMETYPE_RE = re.compile('^{}$'.format(MIMETYPE_REGEX))
+MIMETYPE_REGEX = r"[\w]+\/[\w\-\+\.]+"
+_MIMETYPE_RE = re.compile("^{}$".format(MIMETYPE_REGEX))
 
-CHARSET_REGEX = r'[\w\-\+\.]+'
-_CHARSET_RE = re.compile('^{}$'.format(CHARSET_REGEX))
+CHARSET_REGEX = r"[\w\-\+\.]+"
+_CHARSET_RE = re.compile("^{}$".format(CHARSET_REGEX))
 
 DATA_URI_REGEX = (
-    r'data:' +
-    r'(?P<mimetype>{})?'.format(MIMETYPE_REGEX) +
-    r"(?:\;name\=(?P<name>[\w\.\-%!*'~\(\)]+))?" +
-    r'(?:\;charset\=(?P<charset>{}))?'.format(CHARSET_REGEX) +
-    r'(?P<base64>\;base64)?' +
-    r',(?P<data>.*)')
-_DATA_URI_RE = re.compile(r'^{}$'.format(DATA_URI_REGEX), re.DOTALL)
+    r"data:"
+    + r"(?P<mimetype>{})?".format(MIMETYPE_REGEX)
+    + r"(?:\;name\=(?P<name>[\w\.\-%!*'~\(\)]+))?"
+    + r"(?:\;charset\=(?P<charset>{}))?".format(CHARSET_REGEX)
+    + r"(?P<base64>\;base64)?"
+    + r",(?P<data>.*)"
+)
+_DATA_URI_RE = re.compile(r"^{}$".format(DATA_URI_REGEX), re.DOTALL)
 
 
 class DataURI(str):
-
     @classmethod
     def make(cls, mimetype, charset, base64, data):
-        parts = ['data:']
+        parts = ["data:"]
         if mimetype is not None:
             if not _MIMETYPE_RE.match(mimetype):
                 raise InvalidMimeType("Invalid mimetype: %r" % mimetype)
@@ -37,10 +37,10 @@ class DataURI(str):
         if charset is not None:
             if not _CHARSET_RE.match(charset):
                 raise InvalidCharset("Invalid charset: %r" % charset)
-            parts.extend([';charset=', charset])
+            parts.extend([";charset=", charset])
         if base64:
-            parts.append(';base64')
-            _charset = charset or 'utf-8'
+            parts.append(";base64")
+            _charset = charset or "utf-8"
             if isinstance(data, bytes):
                 _data = data
             else:
@@ -48,13 +48,13 @@ class DataURI(str):
             encoded_data = encode64(_data).decode(_charset).strip()
         else:
             encoded_data = quote(data)
-        parts.extend([',', encoded_data])
-        return cls(''.join(parts))
+        parts.extend([",", encoded_data])
+        return cls("".join(parts))
 
     @classmethod
     def from_file(cls, filename, charset=None, base64=True):
         mimetype, _ = mimetypes.guess_type(filename, strict=False)
-        with open(filename, 'rb') as fp:
+        with open(filename, "rb") as fp:
             data = fp.read()
 
         return cls.make(mimetype, charset, base64, data)
@@ -65,10 +65,10 @@ class DataURI(str):
         return uri
 
     def __repr__(self):
-        return 'DataURI(%s)' % (super(DataURI, self).__repr__(),)
+        return "DataURI(%s)" % (super(DataURI, self).__repr__(),)
 
     def wrap(self, width=76):
-        return '\n'.join(textwrap.wrap(self, width))
+        return "\n".join(textwrap.wrap(self, width))
 
     @property
     def mimetype(self):
@@ -105,15 +105,15 @@ class DataURI(str):
         match = _DATA_URI_RE.match(self)
         if not match:
             raise InvalidDataURI("Not a valid data URI: %r" % self)
-        mimetype = match.group('mimetype') or None
-        name = match.group('name') or None
-        charset = match.group('charset') or None
+        mimetype = match.group("mimetype") or None
+        name = match.group("name") or None
+        charset = match.group("charset") or None
 
-        if match.group('base64'):
-            _charset = charset or 'utf-8'
-            _data = bytes(match.group('data'), _charset)
+        if match.group("base64"):
+            _charset = charset or "utf-8"
+            _data = bytes(match.group("data"), _charset)
             data = decode64(_data)
         else:
-            data = unquote(match.group('data'))
+            data = unquote(match.group("data"))
 
-        return mimetype, name, charset, bool(match.group('base64')), data
+        return mimetype, name, charset, bool(match.group("base64")), data

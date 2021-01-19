@@ -2,7 +2,7 @@ import os
 from setuptools import find_packages, setup
 
 
-VERSION = '0.2.9'
+VERSION = "0.2.9"
 
 
 def read(fname):
@@ -10,31 +10,31 @@ def read(fname):
         with open(os.path.join(os.path.dirname(__file__), fname)) as fh:
             return fh.read()
     except IOError:
-        return ''
+        return ""
 
 
 setup(
-    name='python-datauri',
+    name="python-datauri",
     version=VERSION,
-    url='https://github.com/fcurella/python-datauri/',
-    maintainer='Flavio Curella',
-    maintainer_email='flavio.curella@gmail.com',
+    url="https://github.com/fcurella/python-datauri/",
+    maintainer="Flavio Curella",
+    maintainer_email="flavio.curella@gmail.com",
     description="A li'l class for data URI manipulation in Python",
-    long_description=read('README.rst'),
-    license='MIT',
-    packages=find_packages(exclude=['*.tests']),
+    long_description=read("README.rst"),
+    license="MIT",
+    packages=find_packages(exclude=["*.tests"]),
     platforms=["any"],
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
+        "Development Status :: 4 - Beta",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
-    test_suite='tests',
+    test_suite="tests",
 )
