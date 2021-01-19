@@ -35,5 +35,4 @@ jobs:
     - name: Publish coverage
       run: coveralls --service=github
       env:
-        COVERALLS_PARALLEL: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
