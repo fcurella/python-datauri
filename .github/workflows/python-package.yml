@@ -36,7 +36,7 @@ jobs:
       uses: AndreMiras/coveralls-python-action@develop
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        flag-name: run-${{ matrix.python }}
+        flag-name: run-${{ matrix.python-version }}
         parallel: true
 
   finish:
