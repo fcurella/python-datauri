@@ -1,9 +1,9 @@
 DataURI
 =======
 
-.. image:: https://travis-ci.org/fcurella/python-datauri.svg?branch=master
-    :target: https://travis-ci.org/fcurella/python-datauri
-
+.. image:: https://github.com/fcurella/python-datauri/workflows/Python%20Tests/badge.svg
+    :target: https://github.com/fcurella/python-datauri/actions?query=workflow%3A%22Python+Tests%22
+    :alt: Build status of the master branch on Mac/Linux
 
 .. image:: https://coveralls.io/repos/github/fcurella/python-datauri/badge.svg?branch=master
     :target: https://coveralls.io/github/fcurella/python-datauri?branch=master
