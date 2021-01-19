@@ -38,6 +38,7 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         flag-name: run-${{ matrix.python-version }}
         parallel: true
+        base-path: /github/workspace
 
   finish:
     needs: [test]
@@ -48,3 +49,4 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         parallel-finished: true
+        base-path: /github/workspace
