@@ -32,13 +32,12 @@ jobs:
     - name: Test
       run: |
         coverage run setup.py test
-    - name: Coveralls Parallel
-      uses: AndreMiras/coveralls-python-action@develop
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        flag-name: run-${{ matrix.python-version }}
-        parallel: true
-        base-path: /github/workspace
+    - name: Publish coverage
+      run: coveralls --service=github
+      env:
+        COVERALLS_PARALLEL: true
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        FLAG_NAME: run-${{ matrix.python-version }}
 
   finish:
     needs: [test]
@@ -49,4 +48,3 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         parallel-finished: true
-        base-path: /github/workspace
