@@ -137,11 +137,11 @@ class DataURI(str):
     @classmethod
     def validate(cls, v):
         if not isinstance(v, str):
-            raise TypeError('string required')
+            raise TypeError("string required")
 
         m = cls(v)
         if not m.is_valid:
-            raise ValueError('invalid data-uri format')
+            raise ValueError("invalid data-uri format")
         return m
 
     @classmethod
@@ -150,5 +150,7 @@ class DataURI(str):
         # the returned value will be ignored
         field_schema.update(
             pattern=DATA_URI_REGEX,
-            examples=["data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"],
+            examples=[
+                "data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
+            ],
         )

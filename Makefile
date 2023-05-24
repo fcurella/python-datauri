@@ -1,3 +1,7 @@
+lint:
+	black .
+	isort .
+
 test:
 	poetry run -m pytest
 

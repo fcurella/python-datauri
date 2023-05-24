@@ -1,6 +1,7 @@
 import pytest
 
 from datauri import DataURI
+
 pydantic = pytest.importorskip("pydantic")
 
 
