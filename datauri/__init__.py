@@ -63,7 +63,10 @@ class DataURI(str):
         return uri
 
     def __repr__(self):
-        return "DataURI(%s)" % (super(DataURI, self).__repr__(),)
+        truncated = str(self)
+        if len(truncated) > 80:
+            truncated = truncated[:79] + "…"
+        return "DataURI(%s)" % (truncated,)
 
     def wrap(self, width=76):
         return "\n".join(textwrap.wrap(self, width, break_on_hyphens=False))

@@ -166,5 +166,5 @@ def test_repr():
     uri = DataURI(t)
     assert (
         repr(uri)
-        == "DataURI('data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu')"
+        == "DataURI(data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3Zlci…)"
     )
