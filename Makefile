@@ -1,7 +1,5 @@
 test:
-	python setup.py test
+	poetry run -m pytest
 
 release:
-	rm -rf dist
-	python setup.py sdist bdist_wheel
-	twine upload dist/*
+	poetry publish
