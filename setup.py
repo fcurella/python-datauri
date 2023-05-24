@@ -21,7 +21,7 @@ setup(
     maintainer_email="flavio.curella@gmail.com",
     description="A li'l class for data URI manipulation in Python",
     long_description=read("README.rst"),
-    license="MIT",
+    license="Unlicense",
     packages=find_packages(exclude=["*.tests"]),
     platforms=["any"],
     classifiers=[
