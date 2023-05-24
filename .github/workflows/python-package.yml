@@ -32,7 +32,7 @@ jobs:
       run: |
         poetry run python -m coverage run -m pytest
     - name: Publish coverage
-      run: potery run coveralls --service=github
+      run: poetry run coveralls --service=github
       env:
         COVERALLS_PARALLEL: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
