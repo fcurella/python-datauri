@@ -2,8 +2,10 @@ import os
 import unittest
 
 from datauri import DataURI, exceptions
+from pathlib import Path
 
 TEST_DIR = os.path.dirname(__file__)
+ASSETS_DIR = Path(TEST_DIR) / "assets"
 
 
 class ParseTestCase(unittest.TestCase):
@@ -43,19 +45,19 @@ class ParseTestCase(unittest.TestCase):
             )
 
     def test_from_file(self):
-        filename = os.path.join(TEST_DIR, "test_file.txt")
+        filename = ASSETS_DIR / "test_file.txt"
         parsed = DataURI.from_file(filename)
         self.assertEqual(parsed.data, b"This is a message.\n")
         self.assertEqual(parsed.charset, None)
 
     def test_from_file_charset(self):
-        filename = os.path.join(TEST_DIR, "test_file.txt")
+        filename = ASSETS_DIR / "test_file.txt"
         parsed = DataURI.from_file(filename, charset="us-ascii")
         self.assertEqual(parsed.data, b"This is a message.\n")
         self.assertEqual(parsed.text, "This is a message.\n")
         self.assertEqual(parsed.charset, "us-ascii")
 
-        filename = os.path.join(TEST_DIR, "test_file_ebcdic.txt")
+        filename = ASSETS_DIR / "test_file_ebcdic.txt"
         parsed = DataURI.from_file(filename, charset="cp500")
         self.assertEqual(
             parsed.data,
@@ -65,7 +67,7 @@ class ParseTestCase(unittest.TestCase):
         self.assertEqual(parsed.charset, "cp500")
 
     def test_no_wrap(self):
-        filename = os.path.join(TEST_DIR, "test_long_file.txt")
+        filename = ASSETS_DIR / "test_long_file.txt"
         parsed = DataURI.from_file(filename)
         self.assertFalse("\n" in str(parsed))
 
