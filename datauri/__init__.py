@@ -1,10 +1,8 @@
 import mimetypes
 import re
 import textwrap
-
 from base64 import b64decode as decode64
 from base64 import b64encode as encode64
-
 from urllib.parse import quote, unquote
 
 from .exceptions import InvalidCharset, InvalidDataURI, InvalidMimeType
