@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-datauri"
-version = "1.1.0"
+version = "1.2.0"
 description = "A li'l class for data URI manipulation in Python"
 authors = ["Flavio Curella <flavio.curella@gmail.com>"]
 readme = "README.rst"
