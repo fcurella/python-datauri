@@ -102,10 +102,17 @@ class DataURI(str):
         return self.data.decode(self.charset)
 
     @property
-    def _parse(self):
+    def is_valid(self):
         match = _DATA_URI_RE.match(self)
         if not match:
+            return False
+        return True
+
+    @property
+    def _parse(self):
+        if self.is_valid is False:
             raise InvalidDataURI("Not a valid data URI: %r" % self)
+        match = _DATA_URI_RE.match(self)
         mimetype = match.group("mimetype") or None
         name = match.group("name") or None
         charset = match.group("charset") or None
@@ -118,3 +125,30 @@ class DataURI(str):
             data = unquote(match.group("data"))
 
         return mimetype, name, charset, bool(match.group("base64")), data
+
+    # Pydantic methods
+    @classmethod
+    def __get_validators__(cls):
+        # one or more validators may be yielded which will be called in the
+        # order to validate the input, each validator will receive as an input
+        # the value returned from the previous validator
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if not isinstance(v, str):
+            raise TypeError('string required')
+
+        m = cls(v)
+        if not m.is_valid:
+            raise ValueError('invalid data-uri format')
+        return m
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        # __modify_schema__ should mutate the dict it receives in place,
+        # the returned value will be ignored
+        field_schema.update(
+            pattern=DATA_URI_REGEX,
+            examples=["data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"],
+        )
