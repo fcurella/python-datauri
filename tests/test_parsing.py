@@ -131,7 +131,7 @@ lciB0aGUgbGF6eSBkb2cu""",
         made = DataURI.make(
             "text/plain", charset="us-ascii", base64=True, data="This is a message."
         )
-        self.assertEqual(made.text, u"This is a message.")
+        self.assertEqual(made.text, "This is a message.")
 
     def test_make_no_charset(self):
         made = DataURI.make(
