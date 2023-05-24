@@ -30,9 +30,9 @@ jobs:
         python -m poetry install
     - name: Test
       run: |
-        coverage run -m pytest
+        poetry run python -m coverage run -m pytest
     - name: Publish coverage
-      run: coveralls --service=github
+      run: potery run coveralls --service=github
       env:
         COVERALLS_PARALLEL: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
