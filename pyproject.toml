@@ -9,7 +9,6 @@ license = "Unlicense"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-six = "^1.16.0"
 
 [tool.poetry.group.dev.dependencies]
 coveralls = "^3.3.1"
