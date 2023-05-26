@@ -4,7 +4,7 @@ import sys
 import textwrap
 from base64 import b64decode as decode64
 from base64 import b64encode as encode64
-from typing import Any, Optional, Tuple, Type, TypeVar, Union
+from typing import Any, Dict, Optional, Tuple, TypeVar, Union
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -168,7 +168,7 @@ class DataURI(str):
         return m
 
     @classmethod
-    def __modify_schema__(cls, field_schema: dict[str, Any]) -> None:
+    def __modify_schema__(cls, field_schema: Dict[str, Any]) -> None:
         # __modify_schema__ should mutate the dict it receives in place,
         # the returned value will be ignored
         field_schema.update(
