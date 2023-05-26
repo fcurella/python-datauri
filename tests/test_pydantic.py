@@ -14,6 +14,7 @@ def test_pydantic():
     assert isinstance(instance.content, DataURI)
     assert (
         instance.json()
-        == '{"content": "data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"}'
+        == '{"content": "data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0'
+        'aGUgbGF6eSBkb2cu"}'
     )
     assert instance.dict() == {"content": DataURI(t)}
