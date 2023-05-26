@@ -1,11 +1,21 @@
 import mimetypes
 import re
+import sys
 import textwrap
 from base64 import b64decode as decode64
 from base64 import b64encode as encode64
+from typing import Any, Optional, Tuple, Type, TypeVar, Union
+
+if sys.version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
+
 from urllib.parse import quote, unquote
 
 from .exceptions import InvalidCharset, InvalidDataURI, InvalidMimeType
+
+T = TypeVar("T")
 
 MIMETYPE_REGEX = r"[\w]+\/[\w\-\+\.]+"
 _MIMETYPE_RE = re.compile("^{}$".format(MIMETYPE_REGEX))
@@ -26,7 +36,13 @@ _DATA_URI_RE = re.compile(r"^{}$".format(DATA_URI_REGEX), re.DOTALL)
 
 class DataURI(str):
     @classmethod
-    def make(cls, mimetype, charset, base64, data):
+    def make(
+        cls,
+        mimetype: Optional[str],
+        charset: Optional[str],
+        base64: Optional[bool],
+        data: Union[str, bytes],
+    ) -> Self:
         parts = ["data:"]
         if mimetype is not None:
             if not _MIMETYPE_RE.match(mimetype):
@@ -50,79 +66,86 @@ class DataURI(str):
         return cls("".join(parts))
 
     @classmethod
-    def from_file(cls, filename, charset=None, base64=True):
+    def from_file(
+        cls,
+        filename: str,
+        charset: Optional[str] = None,
+        base64: Optional[bool] = True,
+    ) -> Self:
         mimetype, _ = mimetypes.guess_type(filename, strict=False)
         with open(filename, "rb") as fp:
             data = fp.read()
 
         return cls.make(mimetype, charset, base64, data)
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, *args: Any, **kwargs: Any) -> Self:
         uri = super(DataURI, cls).__new__(cls, *args, **kwargs)
         uri._parse  # Trigger any ValueErrors on instantiation.
         return uri
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         truncated = str(self)
         if len(truncated) > 80:
             truncated = truncated[:79] + "…"
         return "DataURI(%s)" % (truncated,)
 
-    def wrap(self, width=76):
+    def wrap(self, width: int = 76) -> str:
         return "\n".join(textwrap.wrap(self, width, break_on_hyphens=False))
 
     @property
-    def mimetype(self):
+    def mimetype(self) -> Optional[str]:
         return self._parse[0]
 
     @property
-    def name(self):
+    def name(self) -> Optional[str]:
         name = self._parse[1]
         if name is not None:
             return unquote(name)
         return name
 
     @property
-    def charset(self):
+    def charset(self) -> Optional[str]:
         return self._parse[2]
 
     @property
-    def is_base64(self):
+    def is_base64(self) -> bool:
         return self._parse[3]
 
     @property
-    def data(self):
+    def data(self) -> bytes:
         return self._parse[4]
 
     @property
-    def text(self):
+    def text(self) -> str:
         if self.charset is None:
             raise InvalidCharset("DataURI has no encoding set.")
 
         return self.data.decode(self.charset)
 
     @property
-    def is_valid(self):
+    def is_valid(self) -> bool:
         match = _DATA_URI_RE.match(self)
         if not match:
             return False
         return True
 
     @property
-    def _parse(self):
-        if self.is_valid is False:
-            raise InvalidDataURI("Not a valid data URI: %r" % self)
+    def _parse(
+        self,
+    ) -> Tuple[Optional[str], Optional[str], Optional[str], bool, bytes]:
         match = _DATA_URI_RE.match(self)
+        if match is None:
+            raise InvalidDataURI("Not a valid data URI: %r" % self)
         mimetype = match.group("mimetype") or None
         name = match.group("name") or None
-        charset = match.group("charset") or None
+        charset = match.group("charset") or "utf-8"
+        _charset = charset or "utf-8"
 
         if match.group("base64"):
-            _charset = charset or "utf-8"
             _data = bytes(match.group("data"), _charset)
             data = decode64(_data)
         else:
-            data = unquote(match.group("data"))
+            data = bytes(unquote(match.group("data")), _charset)
 
         return mimetype, name, charset, bool(match.group("base64")), data
 
@@ -135,7 +158,7 @@ class DataURI(str):
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v: str) -> Self:
         if not isinstance(v, str):
             raise TypeError("string required")
 
@@ -145,7 +168,7 @@ class DataURI(str):
         return m
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
+    def __modify_schema__(cls, field_schema: dict[str, Any]) -> None:
         # __modify_schema__ should mutate the dict it receives in place,
         # the returned value will be ignored
         field_schema.update(

@@ -23,6 +23,9 @@ setup(
     long_description=read("README.rst"),
     license="Unlicense",
     packages=find_packages(exclude=["*.tests"]),
+    package_data={
+        "faker": ["py.typed"],
+    },
     platforms=["any"],
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -36,4 +39,7 @@ setup(
         "Programming Language :: Python :: 3.10",
     ],
     test_suite="tests",
+    install_requires=[
+        "typing_extensions",
+    ],
 )

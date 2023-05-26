@@ -1,6 +1,7 @@
 lint:
 	black .
 	isort .
+	mypy --install-types --non-interactive --config mypy.ini datauri
 	check-manifest
 
 test:
