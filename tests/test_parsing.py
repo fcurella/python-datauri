@@ -80,7 +80,10 @@ def test_no_wrap():
 
 
 def test_parse_name():
-    t = "data:text/plain;name=file-1_final.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
+    t = (
+        "data:text/plain;name=file-1_final.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgb"
+        "GF6eSBkb2cu"
+    )
     parsed = DataURI(t)
     assert parsed.name == "file-1_final.txt"
 
@@ -92,7 +95,10 @@ def test_emptyname():
 
 
 def test_urlencoded():
-    t = "data:text/plain;name=file%201%20('final'!)%20*~.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
+    t = (
+        "data:text/plain;name=file%201%20('final'!)%20*~.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQ"
+        "gb3ZlciB0aGUgbGF6eSBkb2cu"
+    )
     parsed = DataURI(t)
     assert parsed.name == "file 1 ('final'!) *~.txt"
 
@@ -116,7 +122,10 @@ def test_is_base64():
 
 
 def test_text():
-    t = "data:text/plain;name=file-1_final.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
+    t = (
+        "data:text/plain;name=file-1_final.txt;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgb"
+        "GF6eSBkb2cu"
+    )
     parsed = DataURI(t)
     assert isinstance(parsed.data, bytes)
     assert isinstance(parsed.text, str)

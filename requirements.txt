@@ -1,5 +1,7 @@
 pytest
 coveralls
 pydantic
+flake8
+isort
 check-manifest
 twine
