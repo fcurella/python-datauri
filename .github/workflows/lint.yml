@@ -108,9 +108,11 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -e .
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - uses: psf/black@stable
+      with:
+        options: "--check"
+        src: "."
 
-    - name: Formatting with black
-      run: black .
 
   typing:
     runs-on: ubuntu-latest

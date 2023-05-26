@@ -138,7 +138,7 @@ class DataURI(str):
             raise InvalidDataURI("Not a valid data URI: %r" % self)
         mimetype = match.group("mimetype") or None
         name = match.group("name") or None
-        charset = match.group("charset") or "utf-8"
+        charset = match.group("charset") or None
         _charset = charset or "utf-8"
 
         if match.group("base64"):
