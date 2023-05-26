@@ -1,10 +1,13 @@
 lint:
 	black .
 	isort .
+	check-manifest
 
 test:
-	poetry run -m pytest
+	python -m pytest
 
 release:
-	poetry build
-	poetry publish
+	check-manifest
+	rm -rf build dist
+	python setup.py sdist bdist_wheel
+	twine upload dist/*

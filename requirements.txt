@@ -1,0 +1,5 @@
+pytest
+coveralls
+pydantic
+check-manifest
+twine

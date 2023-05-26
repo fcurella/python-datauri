@@ -1,2 +1,8 @@
-include *.md
+include README.rst
+include LICENSE
+include mypy.ini
+include datauri/py.typed
 graft tests
+
+global-exclude *.py[cod] __pycache__ *.so
+exclude Makefile pytest.ini .coveragerc .bumpversion.cfg .dockerignore .isort.cfg requirements.txt
