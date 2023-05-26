@@ -37,7 +37,7 @@ Parsing
   >>> uri.data
   b'The quick brown fox jumped over the lazy dog.'
 
-Note that ``DataURI.data`` will always return bytes, (which in Python 2 is the same as a string).
+Note that ``DataURI.data`` will always return bytes.
 Use ``DataURI.text`` to get a string.
 
 Creating from a string
