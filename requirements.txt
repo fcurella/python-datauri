@@ -4,5 +4,6 @@ pydantic
 flake8
 isort
 check-manifest
+build
 twine
 mypy

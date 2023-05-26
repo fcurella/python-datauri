@@ -10,5 +10,5 @@ test:
 release:
 	check-manifest
 	rm -rf build dist
-	python setup.py sdist bdist_wheel
+	python -m build
 	twine upload dist/*
