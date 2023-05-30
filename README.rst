@@ -66,6 +66,34 @@ This is really just a convenience method.
   >>> png_uri.data
   b'\x89PNG\r\n...'
 
+
+Serializing
+-----------
+
+`DataURI` is a subclass of `str`, so you can just use `str()` to print it out:
+
+.. code-block:: python
+
+  >>> from datauri import DataURI
+  >>> png_uri = DataURI.from_file('somefile.png')
+  >>> str(png_uri)
+  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIA...'
+ 
+Pydantic Support
+----------------
+
+You can use `DataURI` as a type for `Pydantic`:
+
+.. code-block:: python
+
+  from datauri import DataURI
+  from datauri import DataURI
+  from pydantic import BaseModel
+
+
+  class ProfilePicture(BaseModel):
+    image_data: DataURI
+
 License
 -------
 
