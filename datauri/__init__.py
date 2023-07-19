@@ -71,8 +71,10 @@ class DataURI(str):
         filename: str,
         charset: Optional[str] = None,
         base64: Optional[bool] = True,
+        mimetype: Optional[str] = None,
     ) -> Self:
-        mimetype, _ = mimetypes.guess_type(filename, strict=False)
+        if mimetype is None:
+            mimetype, _ = mimetypes.guess_type(filename, strict=False)
         with open(filename, "rb") as fp:
             data = fp.read()
 
