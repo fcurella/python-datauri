@@ -1,6 +1,6 @@
 pytest
 coveralls
-pydantic
+pydantic<2.0
 flake8
 isort
 check-manifest
