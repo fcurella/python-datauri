@@ -160,7 +160,7 @@ class DataURI(str):
         yield cls.validate
 
     @classmethod
-    def validate(cls, v: str) -> Self:
+    def validate(cls, v: str, x=None) -> Self:
         if not isinstance(v, str):
             raise TypeError("string required")
 
@@ -168,6 +168,15 @@ class DataURI(str):
         if not m.is_valid:
             raise ValueError("invalid data-uri format")
         return m
+
+    @classmethod
+    def __get_pydantic_json_schema__(cls, core_schema, handler) -> Dict[str, Any]:
+        core_schema.update(pattern=DATA_URI_REGEX,
+            examples=[
+                "data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
+            ],
+        )
+        return core_schema
 
     @classmethod
     def __modify_schema__(cls, field_schema: Dict[str, Any]) -> None:
