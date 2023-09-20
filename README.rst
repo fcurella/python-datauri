@@ -87,7 +87,6 @@ You can use `DataURI` as a type for `Pydantic` v1:
 .. code-block:: python
 
   from datauri import DataURI
-  from datauri import DataURI
   from pydantic import BaseModel
 
 
