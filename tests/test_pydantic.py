@@ -7,9 +7,10 @@ pydantic = pytest.importorskip("pydantic")
 try:
     pydantic.version.version_info()
     func_json = "model_dump_json"
-except:
-    pydantic.utils.version_info()
+    func_dict = "model_dump"
+except AttributeError:
     func_json = "json"
+    func_dict = "dict"
 
 
 def test_pydantic():
@@ -23,4 +24,4 @@ def test_pydantic():
         instance.__getattr__(func_json)()
         == '{"content":"data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"}'
     )
-    assert instance.dict() == {"content": DataURI(t)}
+    assert instance.__getattr__(func_dict)() == {"content": DataURI(t)}
