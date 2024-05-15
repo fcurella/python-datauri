@@ -22,7 +22,7 @@ setup(
     description="A li'l class for data URI manipulation in Python",
     long_description=read("README.rst"),
     license="Unlicense",
-    packages=find_packages(exclude=["*.tests"]),
+    packages=find_packages(exclude=["tests", "*.tests"]),
     package_data={
         "faker": ["py.typed"],
     },
