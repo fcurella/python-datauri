@@ -82,7 +82,7 @@ Serializing
 Pydantic Support
 ----------------
 
-You can use `DataURI` as a type for `Pydantic` v1:
+You can use `DataURI` as a type for `Pydantic`:
 
 .. code-block:: python
 
