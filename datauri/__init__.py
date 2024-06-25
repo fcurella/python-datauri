@@ -4,7 +4,7 @@ import sys
 import textwrap
 from base64 import b64decode as decode64
 from base64 import b64encode as encode64
-from typing import Any, Dict, Optional, Tuple, TypeVar, Union
+from typing import Any, Dict, MutableMapping, Optional, Tuple, TypeVar, Union
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -160,14 +160,39 @@ class DataURI(str):
         yield cls.validate
 
     @classmethod
-    def validate(cls, v: str) -> Self:
-        if not isinstance(v, str):
+    def __get_pydantic_core_schema__(cls, source_type: Any, handler: Any) -> Any:
+        from pydantic_core import core_schema
+
+        return core_schema.no_info_after_validator_function(cls, handler(str))
+
+    @classmethod
+    def validate(
+        cls,
+        value: str,
+        values: Optional[MutableMapping[str, Any]] = None,
+        config: Any = None,
+        field: Any = None,
+        **kwargs: Any,
+    ) -> Self:
+        if not isinstance(value, str):
             raise TypeError("string required")
 
-        m = cls(v)
+        m = cls(value)
         if not m.is_valid:
             raise ValueError("invalid data-uri format")
         return m
+
+    @classmethod
+    def __get_pydantic_json_schema__(
+        cls, core_schema: MutableMapping[str, Any], handler: Any
+    ) -> Any:
+        core_schema.update(
+            pattern=DATA_URI_REGEX,
+            examples=[
+                "data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
+            ],
+        )
+        return core_schema
 
     @classmethod
     def __modify_schema__(cls, field_schema: Dict[str, Any]) -> None:

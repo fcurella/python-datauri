@@ -5,7 +5,7 @@ lint:
 	check-manifest
 
 test:
-	python -m pytest
+	python -m pytest  --pdb
 
 release:
 	check-manifest
