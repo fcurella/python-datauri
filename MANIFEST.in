@@ -1,4 +1,5 @@
 include README.rst
+include CHANGELOG.md
 include LICENSE
 include mypy.ini
 include datauri/py.typed
