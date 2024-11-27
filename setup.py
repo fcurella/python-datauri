@@ -24,7 +24,7 @@ setup(
     license="Unlicense",
     packages=find_packages(exclude=["tests", "*.tests"]),
     package_data={
-        "faker": ["py.typed"],
+        "datauri": ["py.typed"],
     },
     platforms=["any"],
     classifiers=[
