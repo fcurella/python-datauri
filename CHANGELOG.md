@@ -1,5 +1,9 @@
 ## Changelog
 
+### [v3.0.1 - 2024-11-27](https://github.com/fcurella/python-datauri/compare/v3.2.0...v3.0.1)
+
+* Cache parsing result
+
 ### [v3.0.0 - 2024-11-27](https://github.com/fcurella/python-datauri/compare/v2.2.0...v3.0.0)
 
 * Drop support for Python 3.7
