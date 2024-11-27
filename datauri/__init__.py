@@ -13,6 +13,8 @@ else:
 
 from urllib.parse import quote, unquote
 
+from cached_property import cached_property
+
 from .exceptions import InvalidCharset, InvalidDataURI, InvalidMimeType
 
 T = TypeVar("T")
@@ -131,7 +133,7 @@ class DataURI(str):
             return False
         return True
 
-    @property
+    @cached_property
     def _parse(
         self,
     ) -> Tuple[Optional[str], Optional[str], Optional[str], bool, bytes]:

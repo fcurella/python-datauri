@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 
@@ -12,6 +13,15 @@ ASSETS_DIR = Path(TEST_DIR) / "assets"
 def test_parse():
     t = "data:text/plain;charset=utf-8,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
     DataURI(t)
+
+
+@patch("datauri.unquote", return_value="The quick brown fox jumped over the lazy dog.")
+def test_parse_cached(_parse):
+    t = "data:text/plain;charset=utf-8,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
+    parsed = DataURI(t)
+    assert parsed.charset is not None
+    assert parsed.data is not None
+    _parse.assert_called_once()
 
 
 def test_parse_base64():

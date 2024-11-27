@@ -39,6 +39,7 @@ setup(
     ],
     test_suite="tests",
     install_requires=[
+        "cached-property",
         "typing_extensions",
     ],
 )
