@@ -1,5 +1,9 @@
 ## Changelog
 
+### [v3.0.0 - 2024-11-27](https://github.com/fcurella/python-datauri/compare/v2.2.0...v3.0.0)
+
+* Drop support for Python 3.7
+
 ### [v2.2.0 - 2024-06-25](https://github.com/fcurella/python-datauri/compare/v2.1.1...v2.2.0)
 
 * Add support for Pydantic v2
