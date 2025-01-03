@@ -1,5 +1,9 @@
 ## Changelog
 
+### [v3.0.2 - 2025-01-03](https://github.com/fcurella/python-datauri/compare/v3.2.1...v3.0.2)
+
+* Fix pydantic json-schema serialization.
+
 ### [v3.0.1 - 2024-11-27](https://github.com/fcurella/python-datauri/compare/v3.2.0...v3.0.1)
 
 * Cache parsing result
@@ -26,7 +30,7 @@
 
 ### [v1.2.1 - 2023-05-25](https://github.com/fcurella/python-datauri/compare/v1.2.0...v1.2.1)
 
-* Remoeve unnecessary dependency from `six`
+* Remove unnecessary dependency from `six`
 
 ### [v1.2.0 - 2023-05-24](https://github.com/fcurella/python-datauri/compare/v1.1.0...v1.2.0)
 
