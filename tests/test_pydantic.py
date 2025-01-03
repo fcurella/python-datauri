@@ -52,5 +52,11 @@ def test_pydantic_v2_json_schema():
         schema_generator=pydantic.json_schema.GenerateJsonSchema
     )
     schema_json = json.dumps(schema)
-    val = '{"properties": {"content": {"examples": ["data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"], "pattern": "data:(?P<mimetype>[\\\w]+\\\/[\\\w\\\-\\\+\\\.]+)?(?:\\\;name\\\=(?P<name>[\\\w\\\.\\\-%!*\'~\\\(\\\)]+))?(?:\\\;charset\\\=(?P<charset>[\\\w\\\-\\\+\\\.]+))?(?P<base64>\\\;base64)?,(?P<data>.*)", "title": "DataURI", "type": "string"}}, "required": ["content"], "title": "Model", "type": "object"}'
+    val = (
+        r'{"properties": {"content": {"examples": ["data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveC'
+        r'BqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"], "pattern": "data:(?P<mimetype>[\\w]+\\/[\\w\\-\\+\\.]+)?(?:\\;name\\='
+        r"(?P<name>[\\w\\.\\-%!*'~\\(\\)]+))?(?:\\;charset\\=(?P<charset>[\\w\\-\\+\\.]+))?(?P<base64>\\;base64)?,(?P"
+        r'<data>.*)", "title": "DataURI", "type": "string"}}, "required": ["content"], "title": "Model", "type": "obj'
+        r'ect"}'
+    )
     assert schema_json == val
