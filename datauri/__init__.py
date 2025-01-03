@@ -188,13 +188,16 @@ class DataURI(str):
     def __get_pydantic_json_schema__(
         cls, core_schema: MutableMapping[str, Any], handler: Any
     ) -> Any:
-        core_schema.update(
-            pattern=DATA_URI_REGEX,
-            examples=[
-                "data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
-            ],
-        )
-        return core_schema
+        json_schema = handler(core_schema)
+        json_schema = handler.resolve_ref_schema(json_schema)
+        json_schema['examples'] = [
+            "data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
+        ]
+        json_schema['pattern'] = DATA_URI_REGEX
+        json_schema['type'] = 'string'
+        json_schema['title'] = 'DataURI'
+
+        return json_schema
 
     @classmethod
     def __modify_schema__(cls, field_schema: Dict[str, Any]) -> None:
