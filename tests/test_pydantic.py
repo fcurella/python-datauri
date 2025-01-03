@@ -48,10 +48,9 @@ def test_pydantic_v2_json_schema():
     class Model(pydantic.BaseModel):
         content: DataURI
 
-    schema = Model.model_json_schema(schema_generator=pydantic.json_schema.GenerateJsonSchema)
+    schema = Model.model_json_schema(
+        schema_generator=pydantic.json_schema.GenerateJsonSchema
+    )
     schema_json = json.dumps(schema)
     val = '{"properties": {"content": {"examples": ["data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"], "pattern": "data:(?P<mimetype>[\\\w]+\\\/[\\\w\\\-\\\+\\\.]+)?(?:\\\;name\\\=(?P<name>[\\\w\\\.\\\-%!*\'~\\\(\\\)]+))?(?:\\\;charset\\\=(?P<charset>[\\\w\\\-\\\+\\\.]+))?(?P<base64>\\\;base64)?,(?P<data>.*)", "title": "DataURI", "type": "string"}}, "required": ["content"], "title": "Model", "type": "object"}'
-    assert (
-        schema_json
-        == val
-    )
+    assert schema_json == val

@@ -190,12 +190,12 @@ class DataURI(str):
     ) -> Any:
         json_schema = handler(core_schema)
         json_schema = handler.resolve_ref_schema(json_schema)
-        json_schema['examples'] = [
+        json_schema["examples"] = [
             "data:text/plain;charset=utf-8;base64,VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wZWQgb3ZlciB0aGUgbGF6eSBkb2cu"
         ]
-        json_schema['pattern'] = DATA_URI_REGEX
-        json_schema['type'] = 'string'
-        json_schema['title'] = 'DataURI'
+        json_schema["pattern"] = DATA_URI_REGEX
+        json_schema["type"] = "string"
+        json_schema["title"] = "DataURI"
 
         return json_schema
 
